@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main', 'dev-*']
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  tests:
+    name: "Tests"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: Install dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .[dev]
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: siuba-tests
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+        env:
+          - SB_TEST_BQDATABASE: tests
+          - SB_TEST_BQPROJECT: tidyverse-pipeline
+
+      - name: Run tests
+        shell: bash
+        run: |
+          pytest
+
