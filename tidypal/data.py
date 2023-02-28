@@ -24,9 +24,9 @@ class File:
         cls._registry[cls.suffix] = cls
 
     @classmethod
-    def from_name(cls, name):
+    def from_name(cls, name, parent=None):
         suffix = name.rsplit(".", 1)[-1]
-        return cls._registry[suffix](name)
+        return cls._registry[suffix](name, parent)
 
 
 class ParquetFile(File):

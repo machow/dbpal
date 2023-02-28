@@ -11,7 +11,7 @@ from siuba.sql import LazyTbl
 from sqlalchemy import create_engine
 from typing import Union, Any
 
-from tidypal.config import get_sql_engine, get_bucket
+from tidypal.config import get_sql_engine, get_bucket, get_fs
 from tidypal import data as dc
 
 
@@ -170,7 +170,7 @@ _DuckDb = Union[dc.SqlEngineDuckdb, dc.DuckdbDiskhouse]
 
 
 def _expand_path(file_obj: dc.File):
-    parent = get_bucket() if not file_obj.parent else file_obj.parent
+    parent = get_bucket() if file_obj.parent is None else file_obj.parent
     full_path = parent + f"/{file_obj.name}"
     return full_path
 
@@ -241,3 +241,29 @@ def file_to_warehouse(file_name: dc.File, table_name, engine: dc.SqlEngineBigque
 
     engine.execute(sql)
 
+
+# copy_to_bucket ==============================================================
+
+@dispatch
+def copy_to_bucket(src: Union[str, Path], dst, fs = None):
+    
+    src_obj = dc.File.from_name(str(src))
+
+    if isinstance(dst, str):
+        dst = dc.File.from_name(dst)
+
+    if fs is None:
+        fs = get_fs()
+
+    return copy_to_bucket(src_obj, dst, fs)
+
+
+@dispatch
+def copy_to_bucket(src: dc.File, dst: dc.File, fs: fsspec.AbstractFileSystem, **kwargs):
+    # TODO: assumes source is always local
+    src_path = src.name
+    dst_path = _expand_path(dst)
+
+    fs.put(src_path, dst_path, **kwargs)
+
+    return dst_path

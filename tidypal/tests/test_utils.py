@@ -4,10 +4,12 @@ import tidypal.data as dc
 
 from pathlib import Path
 
-from tidypal.utils import copy_to_warehouse, file_to_warehouse
+from tidypal.utils import copy_to_warehouse, file_to_warehouse, copy_to_bucket
 from importlib_resources import files
 
 FILES = files("tidypal") / "tests/example_files"
+
+IN_BUCKET = "gs://tidyverse-pipeline/tests/tidypal/tests/example_files"
 
 
 @pytest.mark.parametrize("tbl", [
@@ -31,8 +33,8 @@ def test_copy_to_warehouse_diskhouse(diskhouse):
 
 
 @pytest.mark.parametrize("fname", [
-    dc.ParquetFile("data.parquet", "gs://tidyverse-pipeline/tests/tidypal/tests/example_files"),
-    dc.JsonlFile("data.jsonl", "gs://tidyverse-pipeline/tests/tidypal/tests/example_files"),
+    dc.ParquetFile("data.parquet", IN_BUCKET),
+    dc.JsonlFile("data.jsonl", IN_BUCKET),
 ])
 def test_file_to_warehouse_bigquery(fname, backend):
     if backend.name == "duckdb":
@@ -50,3 +52,13 @@ def test_file_to_warehouse_duckdb(fname, backend):
         pytest.xfail()
 
     file_to_warehouse(fname, "test_file_to_warehouse", backend.engine)
+
+
+@pytest.mark.parametrize("src", [
+    FILES / "data.parquet",
+    str(FILES / "data.parquet"),
+    dc.File(str(FILES / "data.parquet"))
+])
+def test_copy_to_bucket(src, bucket):
+    dst = dc.File(f"test_copy_to_bucket__{type(src)}.parquet", bucket.dirname)
+    copy_to_bucket(src, dst, bucket.fs)

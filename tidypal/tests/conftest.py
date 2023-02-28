@@ -5,6 +5,7 @@ import pytest
 import tempfile
 
 from siuba.tests.helpers import SqlBackend, BigqueryBackend, CloudBackend
+from tidypal.tests.helpers import TempBucket
 
 params_backend = [
     #pytest.param(lambda: SqlBackend("postgresql"), id = "postgresql", marks=pytest.mark.postgresql),
@@ -26,6 +27,19 @@ def backend(request):
         backend = request.param()
 
         yield backend
+
+
+@pytest.fixture
+def bucket():
+    import fsspec
+    import uuid
+
+    # TODO: currently hard-coding gcs bucket
+    bucket = TempBucket.from_protocol("gs", "tidyverse-pipeline/tests/ci/{uuid.uuid4()}")
+
+    yield bucket
+
+    bucket.teardown()
 
 
 @pytest.fixture(scope = "session")
