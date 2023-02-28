@@ -11,8 +11,8 @@ from siuba.sql import LazyTbl
 from sqlalchemy import create_engine
 from typing import Union, Any
 
-from tidypal.config import get_sql_engine, get_bucket, get_fs
-from tidypal import data as dc
+from dbpal.config import get_sql_engine, get_bucket, get_fs
+from dbpal import data as dc
 
 
 SQL_DUCKDB_TEMPLATE = """

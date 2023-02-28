@@ -3,11 +3,11 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["tidypal"]
+include = ["dbpal"]
 namespaces = true
 
 [project]
-name = "tidypal"
+name = "dbpal"
 authors = [
   {name = "Michael Chow", email = "mc_al_github@fastmail.com"}
 ]
@@ -34,4 +34,4 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["tidypal"]
+testpaths = ["dbpal"]

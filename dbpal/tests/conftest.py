@@ -5,7 +5,7 @@ import pytest
 import tempfile
 
 from siuba.tests.helpers import SqlBackend, BigqueryBackend, CloudBackend
-from tidypal.tests.helpers import TempBucket
+from dbpal.tests.helpers import TempBucket
 
 params_backend = [
     #pytest.param(lambda: SqlBackend("postgresql"), id = "postgresql", marks=pytest.mark.postgresql),
@@ -44,7 +44,7 @@ def bucket():
 
 @pytest.fixture(scope = "session")
 def diskhouse():
-    from tidypal.data import DuckdbDiskhouse
+    from dbpal.data import DuckdbDiskhouse
     from sqlalchemy import create_engine
 
     engine = create_engine("duckdb:///:memory:")

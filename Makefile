@@ -1,4 +1,4 @@
-EXAMPLE_FILES=tidypal/tests/example_files
+EXAMPLE_FILES=dbpal/tests/example_files
 
 $(EXAMPLE_FILES): scripts/create_example_data.py
 	python $< $@

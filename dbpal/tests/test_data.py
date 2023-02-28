@@ -1,4 +1,4 @@
-import tidypal.data as dc
+import dbpal.data as dc
 from sqlalchemy.engine import Engine
 from plum import dispatch, type_of
 from sqlalchemy import create_engine

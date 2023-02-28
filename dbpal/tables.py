@@ -2,7 +2,7 @@ import os
 
 from dbcooper import DbCooper, AccessorBuilder
 from functools import partial
-from tidypal.config import get_sql_engine, get_fs
+from dbpal.config import get_sql_engine, get_fs
 from pathlib import Path
 
 __ALL__ = ["get_dbc", "tbls"]

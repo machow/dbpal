@@ -1,15 +1,15 @@
 import pytest
 import pandas as pd
-import tidypal.data as dc
+import dbpal.data as dc
 
 from pathlib import Path
 
-from tidypal.utils import copy_to_warehouse, file_to_warehouse, copy_to_bucket
+from dbpal.utils import copy_to_warehouse, file_to_warehouse, copy_to_bucket
 from importlib_resources import files
 
-FILES = files("tidypal") / "tests/example_files"
+FILES = files("dbpal") / "tests/example_files"
 
-IN_BUCKET = "gs://tidyverse-pipeline/tests/tidypal/tests/example_files"
+IN_BUCKET = "gs://tidyverse-pipeline/tests/dbpal/tests/example_files"
 
 
 @pytest.mark.parametrize("tbl", [
