@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["tidypal"]
+namespaces = true
+
+[project]
+name = "tidypal"
+authors = [
+  {name = "Michael Chow", email = "mc_al_github@fastmail.com"}
+]
+description = ""
+requires-python = ">=3.8"
+dependencies = [
+  "plum-dispatch",
+  "fsspec",
+  "gcsfs",
+  "importlib_resources",
+  "pandas",
+  "sqlalchemy",
+  "sqlalchemy-bigquery",
+  "siuba",
+]
+version = "0.0.1"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-dotenv",
+  "duckdb_engine",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tidypal"]
