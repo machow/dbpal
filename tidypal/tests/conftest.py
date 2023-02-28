@@ -35,7 +35,7 @@ def bucket():
     import uuid
 
     # TODO: currently hard-coding gcs bucket
-    bucket = TempBucket.from_protocol("gs", "tidyverse-pipeline/tests/ci/{uuid.uuid4()}")
+    bucket = TempBucket.from_protocol("gs", f"tidyverse-pipeline/tests/ci/{uuid.uuid4()}")
 
     yield bucket
 
