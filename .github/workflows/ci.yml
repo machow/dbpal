@@ -30,8 +30,8 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
         env:
-          - SB_TEST_BQDATABASE: tests
-          - SB_TEST_BQPROJECT: tidyverse-pipeline
+          SB_TEST_BQDATABASE: tests
+          SB_TEST_BQPROJECT: tidyverse-pipeline
 
       - name: Run tests
         shell: bash
