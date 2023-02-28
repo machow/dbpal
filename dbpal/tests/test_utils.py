@@ -5,6 +5,9 @@ import dbpal.data as dc
 from pathlib import Path
 
 from dbpal.utils import copy_to_warehouse, file_to_warehouse, copy_to_bucket
+from dbpal.config import get_sql_engine
+from dbpal.tests.helpers import set_env
+
 from importlib_resources import files
 
 FILES = files("dbpal") / "tests/example_files"
@@ -18,6 +21,18 @@ IN_BUCKET = "gs://tidyverse-pipeline/tests/dbpal/tests/example_files"
 ])
 def test_copy_to_warehouse(tbl, backend):
     final_name = copy_to_warehouse(tbl, "test_copy_to_warehouse", backend.engine)
+
+
+def test_copy_to_warehouse_default():
+    engine_url = "duckdb:///:memory:"
+    with set_env(PIPELINE_WAREHOUSE_URI=engine_url):
+        engine = get_sql_engine()
+
+        assert str(engine.url) == engine_url
+
+        res = copy_to_warehouse("SELECT 1", "test_df")
+
+        engine.execute("SELECT * FROM test_df")
 
 
 def test_copy_to_warehouse_diskhouse(diskhouse):

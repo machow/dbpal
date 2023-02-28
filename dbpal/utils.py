@@ -88,7 +88,7 @@ def copy_to_warehouse(tbl, name, engine: None = None, **kwargs):
     if engine is None:
         engine = get_sql_engine()
 
-    return copy_to_warehouse(tbl, name, engine=engine, **kwargs)
+    return copy_to_warehouse(tbl, name, engine, **kwargs)
 
 
 @dispatch
@@ -183,7 +183,7 @@ def file_to_warehouse(file_name, table_name):
 @dispatch
 def file_to_warehouse(file_name: str, table_name, engine = None, **kwargs):
     if engine is None:
-        engine = get_engine()
+        engine = get_sql_engine()
 
     obj = dc.File.from_name(file_name)
     if type(obj) is dc.File:

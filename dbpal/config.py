@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 
 def get_bucket():
     return os.environ["PIPELINE_BUCKET"]
@@ -17,11 +18,14 @@ def get_fs():
 
 
 def get_sql_engine(read_only=False):
-    from sqlalchemy import create_engine
 
     db_path = os.environ["PIPELINE_WAREHOUSE_URI"]
 
-    return create_engine(
-        db_path,
-    )
+    return _create_engine(db_path)
+
+
+@lru_cache(maxsize=None)
+def _create_engine(db_path):
+    from sqlalchemy import create_engine
+    return create_engine(db_path)
 

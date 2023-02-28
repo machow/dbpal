@@ -1,6 +1,28 @@
+import contextlib
 import fsspec
+import os
 
 from dataclasses import dataclass
+
+
+@contextlib.contextmanager
+def set_env(**kwargs):
+    """
+    Temporarily set the process environment variables.
+    """
+    old_environ = dict(os.environ)
+    for k, v in kwargs.items():
+        if k in os.environ:
+            del os.environ[k]
+
+        os.environ[k] = v
+
+    try:
+        yield
+    finally:
+        os.environ.clear()
+        os.environ.update(old_environ)
+
 
 
 @dataclass
