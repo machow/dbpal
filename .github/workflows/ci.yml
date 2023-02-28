@@ -41,8 +41,7 @@ jobs:
   release:
     name: "Release to PyPI"
     runs-on: ubuntu-latest
-    # just release all the time
-    #if: github.event_name == 'release'
+    if: github.event_name == 'release'
     needs: [tests]
     steps:
       - uses: actions/checkout@v2
