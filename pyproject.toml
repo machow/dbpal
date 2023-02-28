@@ -40,3 +40,5 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["dbpal"]
+
+[tool.setuptools_scm]
