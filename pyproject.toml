@@ -11,8 +11,13 @@ name = "dbpal"
 authors = [
   {name = "Michael Chow", email = "mc_al_github@fastmail.com"}
 ]
-description = ""
+description = "A utility package for pushing around data"
+readme = "README.md"
 requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+keywords = ["data"]
 dependencies = [
   "plum-dispatch",
   "fsspec",
