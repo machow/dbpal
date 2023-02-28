@@ -23,7 +23,7 @@ dependencies = [
   "sqlalchemy-bigquery",
   "siuba",
 ]
-version = "0.0.1"
+dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
