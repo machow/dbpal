@@ -30,6 +30,7 @@ dev = [
   "pytest",
   "pytest-dotenv",
   "duckdb_engine",
+  "pandas-gbq"
 ]
 
 [tool.pytest.ini_options]
