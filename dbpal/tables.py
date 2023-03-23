@@ -1,6 +1,6 @@
 import os
 
-from dbcooper import DbCooper, AccessorBuilder
+from dbcooper import DbCooper, AccessorHierarchyBuilder
 from functools import partial
 from dbpal.config import get_sql_engine, get_fs
 from pathlib import Path
@@ -12,7 +12,7 @@ def get_dbc(read_only=True):
     engine = get_sql_engine(read_only)
     dbc = DbCooper(
         engine,
-        accessor_builder = AccessorBuilder(format_from_part="schema")
+        accessor_builder = AccessorHierarchyBuilder()
     )
 
     # if we're using duckdb, then the warehouse is a bunch of parquet files,
