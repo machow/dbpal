@@ -19,7 +19,7 @@ classifiers = [
 ]
 keywords = ["data"]
 dependencies = [
-  "plum-dispatch",
+  "plum-dispatch<2.0.0",
   "fsspec",
   "gcsfs",
   "importlib_resources",
