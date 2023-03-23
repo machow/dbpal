@@ -12,7 +12,7 @@ def get_dbc(read_only=True):
     engine = get_sql_engine(read_only)
     dbc = DbCooper(
         engine,
-        accessor_builder = AccessorBuilder(format_from_part="table")
+        accessor_builder = AccessorBuilder(format_from_part="schema")
     )
 
     # if we're using duckdb, then the warehouse is a bunch of parquet files,
